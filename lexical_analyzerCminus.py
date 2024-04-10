@@ -24,7 +24,10 @@ class AnalisadorLexico:
 
     ponto_flutuante = r'[+-]?\d+\.\d+'
 
-    constante_textual = r'["\'][^"\']*["\']'
+    constante_textual = r'(["\'])(?:(?!\1).)*\1'
+    # constante_textual = r'(["\'])(?:(?!\1).)*\1'
+
+    # constante_textual = r'["\'][^"\']*["\']'
 
     def __init__(self, arquivo):
         try:
@@ -47,6 +50,7 @@ class AnalisadorLexico:
         # Cria um objeto que contem todas as possiveis formas de ER
         regex = re.compile(
              r'\+\+|\d+[a-zA-Z_]*\b|[a-zA-Z_]+[a-zA-Z0-9_]*\b|["\'][^"\']*["\']|[+-]?\d+\.\d+|->|&&|\|\||\-\-|[-+*/%&=!><\|]=?|[-+*/%&=!><\|]|\||\(|\)|\[|\]|\{|\}|\.|,|;')
+
 
         # Separa as palavras do arquivo de acordo com as ER compiladas acima.
         valores_tokens = regex.findall(conteudo)
@@ -83,11 +87,9 @@ class AnalisadorLexico:
 
     def printTokens(self):
         """Imprime os tipos e valores dos tokens encontradas no arquivo"""
-        print(f"TIPO | VALOR")
-        print(f":---------- | :----------")
 
         for token in self.tokens:
-            if re.match(r'\d+[a-zA-Z_]+\b|[a-zA-Z_]+[™]\b', token.valor):
+            if token.tipo == 'Desconhecido':
                 token.tipo = "Erro Léxico"
                 token.valor = f"Erro: token inválido {token.valor}"
 
