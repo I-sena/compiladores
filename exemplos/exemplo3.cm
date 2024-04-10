@@ -1,0 +1,13 @@
+
+int main() {
+    int i = 2-1;
+    .123 = teste
+    
+    // Usando um loop while para imprimir números de 1 a 10
+    while (i <= 10) {
+        printf("%d ", i);
+        i--;
+    }
+
+    return 0;
+}
